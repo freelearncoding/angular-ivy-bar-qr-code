@@ -1,0 +1,26 @@
+<!-- <hello name="{{ name }}"></hello> -->
+
+<h5>{{ name }} + Used for this Demo</h5>
+<p>Logo Header here</p>
+<p></p>
+
+<button><span class="material-icons">qr_code</span></button>
+<p style="color:red" *ngIf="isError">Barcode scan is not available.</p>
+<h3>
+  Barcode Scanner - detected barcode:
+  <small style="color: blue">{{ barcodeValue }}</small>
+</h3>
+<!-- <ngx-barcode-scanner
+  [(value)]="value"
+  [codes]="['code_128', 'ean', 'upc', 'upc_e', 'ean_8']"
+  [errorThreshold]="0.1"
+  (exception)="onError($event)"
+></ngx-barcode-scanner> -->
+<div [hidden]="!barcodeValue">
+  {{ barcodeValue }}
+</div>
+<barcode-scanner-livestream
+  type="code_128"
+  (valueChanges)="onValueChanges($event)"
+  (started)="(onStarted)"
+></barcode-scanner-livestream>
