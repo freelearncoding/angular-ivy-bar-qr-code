@@ -1,5 +1,5 @@
 
-# Angular 13+ AND BARCode / QR Code Scanner
+# Angular 13+ with Material 2 and BARCode / QR Code Scanner
 
 This is a test project to demonstrate using [Angular 13+](https://github.com/angular/angular-cli). I am using [QuaggaJS](https://github.com/ericblade/quagga2#readme) Package to read barcode and . Please ref. link to see list of supported bar code.
 
