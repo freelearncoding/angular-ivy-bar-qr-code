@@ -1,6 +1,26 @@
+
+<p>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
 <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
-  <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" [active]="activeLink == link"> <span *ngIf="link == 'Bar Code' || link == 'QR Code'"
-      class="material-icons">qr_code</span> {{link}} </a>
+  <a mat-tab-link *ngFor="let link of links" (click)="clickTab($event)" [active]="activeLink == link"> 
+      <button mat-icon-button class="example-icon" >
+        <mat-icon *ngIf="link == 'Bar Code' || link == 'QR Code'">qr_code</mat-icon>{{link}} 
+      </button>
+    </a>
   <a mat-tab-link disabled>Disabled Link</a>
 </nav>
 <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
@@ -14,30 +34,21 @@
   <button mat-raised-button class="action-button">
     Save
   </button>
-  <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event, false)" (started)="(onStarted)">
+  <button mat-button (click)="cameraToggle(false)" [disabled]="getdisabled(false)">{{barcodeScanner?.started ? 'Stop' : 'Start'}}</button>
+  <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event, false)" (started)="onStarted($event, false)">
   </barcode-scanner-livestream>
 </div>
 
 <div *ngIf="activeLink == 'QR Code'">
-  <p style="color:red" *ngIf="isError">Barcode scan is not available.</p>
-  <h3>
-    Barcode Scanner - detected barcode:
-    <small style="color: blue">{{ barcodeValue }}</small>
-  </h3>
-  <button mat-raised-button class="action-button">
-    Save
-  </button>
-  <ngx-scanner-qrcode #action="scanner" (data)="onValueChanges($event)" (error)="onError($event, true)"></ngx-scanner-qrcode>
-  <button (click)="action.toggleCamera()" [disabled]="action.isLoading">{{action.isStart ? 'Stop' : 'Start'}}</button>
-
+  <div>
+    <img src="./../assets/inpro.png">
+  </div>
 </div>
 
 <div *ngIf="activeLink == 'Read Me'">
-  This is a test project to demonstrate using [Angular 13+](https://github.com/angular/angular-cli). I am using
-  [QuaggaJS](https://github.com/ericblade/quagga2#readme) Package to read barcode and . Please ref. link to see list of
-  supported bar code.
 
-  It's been extended with testing support so you can start writing tests immediately.
+  <p style="color:goldenrod; font-style: oblique; font-size: x-large;margin: 5px;">This is a test project to demonstrate using [Angular 13+].</p>
+  <p style="color:goldenrod; font-style: oblique; font-size: x-large;margin: 5px;">I am using [QuaggaJS] Package to read barcode Please ref. to see list of  supported bar code.</p>
 
 </div>
 
@@ -48,3 +59,4 @@
   [errorThreshold]="0.1"
   (exception)="onError($event)"
 ></ngx-barcode-scanner> -->
+<router-outlet></router-outlet>
