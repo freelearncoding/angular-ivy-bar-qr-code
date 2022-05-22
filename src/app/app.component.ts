@@ -1,7 +1,6 @@
 import { Component, ElementRef, VERSION, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { BarcodeScannerLivestreamComponent } from 'ngx-barcode-scanner';
-import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { ChangeDetectorRef } from '@angular/core';
 
 
@@ -20,8 +19,6 @@ export class AppComponent {
 
 
   @ViewChild(BarcodeScannerLivestreamComponent) barcodeScanner: BarcodeScannerLivestreamComponent;
-  @ViewChild(NgxScannerQrcodeComponent) qrcodeh: NgxScannerQrcodeComponent;
-  // @ViewChild('qrcodeh') QRScanner: NgxScannerQrcodeComponent;
 
   barcodeValue: any;
   constructor(private cdref: ChangeDetectorRef) { }
@@ -46,9 +43,6 @@ export class AppComponent {
    
     switch (this.activeLink) {
       case 'Bar Code':
-        if (this.qrcodeh) {
-          this.qrcodeh.stop();
-        }
         setTimeout(() => {
           if (this.barcodeScanner) {
             this.barcodeScanner.start();
@@ -59,11 +53,6 @@ export class AppComponent {
         if (this.barcodeScanner) {
           this.barcodeScanner.stop();
         }
-        setTimeout(() => {
-          if (this.qrcodeh) {
-            this.qrcodeh.start();
-          }
-        }, 1000);
         break;
       default:
         break;
@@ -87,28 +76,20 @@ export class AppComponent {
 
   onStarted(started: any, isQR: boolean) {
     console.log(started);
-    if (isQR && this.qrcodeh && !this.qrcodeh.isStart && started) {
-      this.cdref.detectChanges();
-    } 
     if (!isQR && this.barcodeScanner && !this.barcodeScanner.isStarted && started) {
       this.cdref.detectChanges();
     }
   }
 
   cameraToggle(isQR: boolean) {
-    if (isQR) {
-      this.qrcodeh.toggleCamera(); 
-    } else {
+    if (!isQR) {
       this.barcodeScanner.isStarted ? this.barcodeScanner.stop() : this.barcodeScanner.start();
     }
   }
 
   getdisabled(isQR: boolean) {
-    if (isQR) {
-      return !(this.qrcodeh && this.qrcodeh.isStart); 
-    } else {
+    if (!isQR) {
       return !(this.barcodeScanner && this.barcodeScanner.isStarted) ;
     }
   }
-
 }
