@@ -1,26 +1,50 @@
-<!-- <hello name="{{ name }}"></hello> -->
+<nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
+  <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" [active]="activeLink == link"> <span *ngIf="link == 'Bar Code' || link == 'QR Code'"
+      class="material-icons">qr_code</span> {{link}} </a>
+  <a mat-tab-link disabled>Disabled Link</a>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 
-<h5>{{ name }} + Used for this Demo</h5>
-<p>Logo Header here</p>
-<p></p>
+<div *ngIf="activeLink == 'Bar Code'">
+  <p style="color:red" *ngIf="isError">Barcode scan is not available.</p>
+  <h3>
+    Barcode Scanner - detected barcode:
+    <small style="color: blue" *ngIf="!barcodeValue">{{ barcodeValue }}</small>
+  </h3>
+  <button mat-raised-button class="action-button">
+    Save
+  </button>
+  <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event, false)" (started)="(onStarted)">
+  </barcode-scanner-livestream>
+</div>
 
-<button><span class="material-icons">qr_code</span></button>
-<p style="color:red" *ngIf="isError">Barcode scan is not available.</p>
-<h3>
-  Barcode Scanner - detected barcode:
-  <small style="color: blue">{{ barcodeValue }}</small>
-</h3>
+<div *ngIf="activeLink == 'QR Code'">
+  <p style="color:red" *ngIf="isError">Barcode scan is not available.</p>
+  <h3>
+    Barcode Scanner - detected barcode:
+    <small style="color: blue">{{ barcodeValue }}</small>
+  </h3>
+  <button mat-raised-button class="action-button">
+    Save
+  </button>
+  <ngx-scanner-qrcode #action="scanner" (data)="onValueChanges($event)" (error)="onError($event, true)"></ngx-scanner-qrcode>
+  <button (click)="action.toggleCamera()" [disabled]="action.isLoading">{{action.isStart ? 'Stop' : 'Start'}}</button>
+
+</div>
+
+<div *ngIf="activeLink == 'Read Me'">
+  This is a test project to demonstrate using [Angular 13+](https://github.com/angular/angular-cli). I am using
+  [QuaggaJS](https://github.com/ericblade/quagga2#readme) Package to read barcode and . Please ref. link to see list of
+  supported bar code.
+
+  It's been extended with testing support so you can start writing tests immediately.
+
+</div>
+
+
 <!-- <ngx-barcode-scanner
   [(value)]="value"
   [codes]="['code_128', 'ean', 'upc', 'upc_e', 'ean_8']"
   [errorThreshold]="0.1"
   (exception)="onError($event)"
 ></ngx-barcode-scanner> -->
-<div [hidden]="!barcodeValue">
-  {{ barcodeValue }}
-</div>
-<barcode-scanner-livestream
-  type="code_128"
-  (valueChanges)="onValueChanges($event)"
-  (started)="(onStarted)"
-></barcode-scanner-livestream>

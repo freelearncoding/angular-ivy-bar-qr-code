@@ -1,20 +1,28 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule, } from '@angular/platform-browser';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello.component';
-import { NgxBarcodeScannerModule } from '@eisberg-labs/ngx-barcode-scanner';
 import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
-    NgxBarcodeScannerModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTabsModule,
     BarcodeScannerLivestreamModule,
+    NgxScannerQrcodeModule
   ],
-  declarations: [AppComponent, HelloComponent],
+  declarations: [AppComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,25 +1,30 @@
 import { Component, VERSION, ViewChild, AfterViewInit } from '@angular/core';
-import { NgxBarcodeScannerComponent } from '@eisberg-labs/ngx-barcode-scanner';
+import { ThemePalette } from '@angular/material/core';
 import { BarcodeScannerLivestreamComponent } from 'ngx-barcode-scanner';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit {
   name = 'Angular ' + VERSION.major;
-
-  // barcodeValue: any;
-  // value!: string;
+  links = ['Bar Code', 'QR Code', 'Read Me'];
+  activeLink = this.links[0];
+  background: ThemePalette = undefined;
   isError = false;
-  // @ViewChild(NgxBarcodeScannerComponent)
-  // barecodeScanner!: NgxBarcodeScannerComponent;
+  publ output: string;
 
-  @ViewChild(BarcodeScannerLivestreamComponent)
-  barcodeScanner: BarcodeScannerLivestreamComponent;
+  toggleBackground() {
+    this.background = this.background ? undefined : 'primary';
+  }
 
-  barcodeValue;
+  addLink() {
+    this.links.push(`Link ${this.links.length + 1}`);
+  }
+  
+  @ViewChild(BarcodeScannerLivestreamComponent) barcodeScanner: BarcodeScannerLivestreamComponent;
+  barcodeValue: any;
 
   onError(error: any) {
     console.error(error);
@@ -30,12 +35,24 @@ export class AppComponent implements AfterViewInit {
     this.barcodeScanner.start();
   }
 
-  onValueChanges(result: any) {
-    this.barcodeValue = result.codeResult.code;
+  onValueChanges(result: any, isQR: boolean) {
+    if (isQR) {
+      this.barcodeValue = result;
+    } else {
+      this.barcodeValue = result.codeResult.code;
+    }
+
     console.log(result);
   }
 
   onStarted(started: any) {
     console.log(started);
   }
+
+  
+  // barcodeValue: any;
+  // value!: string;
+  // @ViewChild(NgxBarcodeScannerComponent)
+  // barecodeScanner!: NgxBarcodeScannerComponent;
+
 }
