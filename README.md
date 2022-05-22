@@ -1,12 +1,12 @@
 
 # Angular 13+ AND BARCode / QR Code Scanner
 
-This is a test project to demonstrate using Angular 13+(https://github.com/angular/angular-cli). I am usig QuaggaJS(https://github.com/ericblade/quagga2#readme) Package to read barcode and . Please ref. link to see list of supported bar code.
+This is a test project to demonstrate using [Angular 13+](https://github.com/angular/angular-cli). I am usig [QuaggaJS](https://github.com/ericblade/quagga2#readme) Package to read barcode and . Please ref. link to see list of supported bar code.
 
 It's been extended with testing support so you can start writing tests immediately.
 
 ## Get started
-You can play in direct Demo(https://stackblitz.com/edit/angular-ivy-kxarws) StackBlitz link
+You can play in direct [Demo](https://stackblitz.com/edit/angular-ivy-kxarws) StackBlitz link
 
 ### Clone the repo
 
